@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSX grammer</title>
+    <style>
+        .title{background-color: green; width: 200px; color: white;}
+    </style>
+</head>
+<body>
+    <div id="test"> Replaced container</div>
+    <div id="demo"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        const myId='myId';
+        const myContent ='this is content';
+        //1. Create VM
+        const VDOM= (
+            <div>
+                <h1 className="title" id={myId.toLocaleLowerCase()}>
+                    <span style={{fontSize:'35px', color:'grey'}}> {myContent.toLocaleLowerCase()} </span>
+                </h1>
+                <h2 className="title" id={myId.toLocaleLowerCase()+"1"}>
+                    <span style={{fontSize:'35px'}}> {myContent.toLocaleLowerCase()} </span>
+                </h2>
+                <input type="text"/>
+            </div>
+        );
+        //2. Render VM
+        ReactDOM.render(VDOM, document.getElementById('test'));
+    </script>
+</body>
+</html>
