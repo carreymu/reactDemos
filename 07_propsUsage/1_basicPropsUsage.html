@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>basic props usage</title>
+</head>
+<body>
+    <div id="person1"></div>
+    <div id="person2"></div>
+    <div id="person3"></div>
+    <div id="person4"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class Person extends React.Component {
+            render() {
+                console.log(this);
+                const {name, gender, age} = this.props;
+                return (
+                    <ul>
+                        <li>Name: {name}</li>
+                        <li>Gender: {gender}</li>
+                        <li>Age: {age + 1}</li>
+                    </ul>
+                )
+            }
+        }
+        // Wrong way to use age
+        ReactDOM.render(<Person name="Tom" gender="male" age="15"/>, document.getElementById('person1'));
+        
+        ReactDOM.render(<Person name="Jerry" gender="female" age={16}/>, document.getElementById('person2'));
+
+        const newPerson = {name: "Honey", gender:"female", age:19}
+        console.log('@', ...newPerson); //The wrong way to use it
+        ReactDOM.render(<Person {...newPerson}/>, document.getElementById('person3'));
+
+        //clone and modify variable
+        let person4 = {...newPerson, name:'jack', age:20, address:'Tokyo'};
+        ReactDOM.render(<Person {...person4}/>, document.getElementById('person4'));
+    </script>
+</body>
+</html>
