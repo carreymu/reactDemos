@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>refs with form of string</title>
+    <title>refs with form of callback</title>
 </head>
 <body>
     <div id="test"></div>
@@ -13,19 +13,20 @@
         class MyComponent extends React.Component {
             showData=()=>{
                 console.log(this);
-                const {input1} = this.refs;
+                const {input1} = this;
                 alert(input1.value)
             }
             showDataFocus=()=>{
-                const {input2} = this.refs;
+                const {input2} = this;
                 alert(input2.value);
             }
             render() {
                 return (
                     <div>
-                        <input ref="input1" type="text" placeholder="pop message after clicking button"/>&nbsp;&nbsp;&nbsp;
+                        <input ref={a => console.log(a) } type="hidden" placeholder="show what current ref stands for"/><br/>
+                        <input ref={c => this.input1 = c} type="text" placeholder="pop message after clicking button"/>&nbsp;&nbsp;&nbsp;
                         <button ref="button1" onClick={this.showData}> pop message from left input textbox</button>&nbsp;&nbsp;&nbsp;
-                        <input ref="input2" onBlur={this.showDataFocus} type="text" placeholder="pop message after losing focus" />
+                        <input ref={c => this.input2 = c} onBlur={this.showDataFocus} type="text" placeholder="pop message after losing focus" />
                     </div>
                 )
             }

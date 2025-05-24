@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>refs call times with form of callback</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            state = {isHot: true};
+            showData=()=>{
+                const {input1} = this;
+                alert(input1.value)
+            }
+            saveInput=(c)=>{
+                this.input1 = c;
+                console.log("@", c);
+            }
+            render() {
+                const {isHot} = this.state;
+                return (
+                    <div>
+                        <h2>Today is {isHot?'hot':'cold'}</h2>&nbsp;
+                        <button onClick={()=>this.setState({isHot:!this.state.isHot})}>changeWeather</button>
+                        <br/><br/>
+                        {/*<input ref={c => {this.input1 = c; console.log("@", c);}} type="text" placeholder="pop message after clicking button"/>*/}
+                        <input ref={this.saveInput} type="text"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <button ref="button1" onClick={this.showData}> Go</button>&nbsp;&nbsp;&nbsp;
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<MyComponent/>, document.getElementById('test'));
+    </script>
+</body>
+</html>
