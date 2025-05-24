@@ -5,7 +5,6 @@
     <title>simplify props</title>
 </head>
 <body>
-    <div id="test"> Replaced container</div>
     <div id="person1"></div>
     <div id="person2"></div>
     <div id="person3"></div>
@@ -16,13 +15,14 @@
     <script type="text/javascript" src="../js/prop-types.js"></script>
     <script type="text/babel">
         class Person extends React.Component {
-            state = {isShowAddress: false}
+            state = {isShowAddress: true}
              // props restriction
             static propTypes = {
                 name: PropTypes.string.isRequired,
                 gender: PropTypes.string,
                 age: PropTypes.number,
                 talk: PropTypes.func,
+                address: PropTypes.string,
             }
             // default for props
             static defaultProps = {
@@ -31,12 +31,13 @@
             }
             render() {
                 console.log(this);
-                const {name, gender, age} = this.props;
+                const {name, gender, age, address} = this.props;
                 return (
                     <ul>
                         <li>Name: {name}</li>
                         <li>Gender: {gender}</li>
                         <li>Age: {age + 1}</li>
+                        <li>{address && this.state.isShowAddress?"Address: " + address : ""}</li>
                     </ul>
                 )
             }
@@ -45,7 +46,6 @@
         function talk () {
             console.log("Let's talk.");
         }
-        ReactDOM.render(<Person/>, document.getElementById('test'));
         // Wrong way to use age
         ReactDOM.render(<Person name="Tom" gender="male" talk={talk}/>, document.getElementById('person1'));
         
