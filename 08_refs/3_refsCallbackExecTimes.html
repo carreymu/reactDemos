@@ -14,12 +14,12 @@
             state = {isHot: true};
             showData=()=>{
                 const {input1} = this;
-                alert(input1.value)
-            }
-            saveInput=(c)=>{
+                alert(input1.value);
+            };
+            saveInput= c => {
                 this.input1 = c;
                 console.log("@", c);
-            }
+            };
             render() {
                 const {isHot} = this.state;
                 return (

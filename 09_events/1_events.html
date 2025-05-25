@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event handlers</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            /*
+                1.React events are specified with event handling functions via onXxx attributes.
+                    1.1. React uses custom events instead of native ones – for better compatibility.
+                    1.2. Events in React are handled through event delegation (delegated to the outermost element) – for efficiency.
+                2.Obtain the DOM element object where the event occurred through event.target. - avoid overusing ref.
+            */
+            myRef = React.createRef();
+            myRef2 = React.createRef();
+            showData=()=>{
+                const {myRef} = this
+                console.log('@', myRef);
+                console.log('@ input textbox', myRef.current);
+                alert(myRef.current.value);
+            };
+            showData2 = (event) => {
+                alert(event.target.value);
+            }
+            render() {
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" placeholder="pop message after clicking button"/>&nbsp;&nbsp;&nbsp;
+                        <button ref="button1" onClick={this.showData}> pop message from left input textbox</button>&nbsp;&nbsp;&nbsp;
+                        <input type="text" onBlur={this.showData2} placeholder="pop message after losing focus"/>&nbsp;&nbsp;&nbsp;
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<MyComponent/>, document.getElementById('test'));
+    </script>
+</body>
+</html>
