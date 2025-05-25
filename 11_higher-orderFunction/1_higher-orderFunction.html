@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event handlers</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //#region
+        /*
+        Higher-order Functions:
+            1. A function that takes another function as a parameter.
+            2. A function that returns another function.
+            For example: Promise, setTimeout and arr.map() etc.
+        Function Currying:
+            A technique where a function returns a series of nested functions, allowing it to accept arguments incrementally and defer computation until all required parameters are provided.
+        */
+       //#endregion
+        class Login extends React.Component {
+            state = {
+                username:'',
+                password:'',
+            }
+            saveFormData = (dataType) => {
+                console.log('@',dataType);
+                return  (event) => {
+                    this.setState({[dataType]: event.target.value});
+                }
+            }
+            handleSubmit = (event) => {
+                console.log(event);
+                event.preventDefault(); // Stop form submit
+                const {username, password} = this.state;
+                alert(`Username is [${username}], password is [${password}]`);
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        Username: <input onChange={this.saveFormData('username')} type="text" name="username" placeholder="plz input user name"/>&nbsp;&nbsp;&nbsp;
+                        Password: <input onChange={this.saveFormData('password')} type="password" name="password" placeholder="plz input user password"/>&nbsp;&nbsp;&nbsp;
+                        <button> login </button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login/>, document.getElementById('test'));
+    </script>
+</body>
+</html>

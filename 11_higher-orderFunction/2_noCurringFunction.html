@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event handlers</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class Login extends React.Component {
+            state = {
+                username:'',
+                password:'',
+            }
+            saveFormData = (dataType, event) => {
+                this.setState({[dataType]: event.target.value});
+            }
+            handleSubmit = (event) => {
+                console.log(event);
+                event.preventDefault(); // Stop form submit
+                const {username, password} = this.state;
+                alert(`Username is [${username}], password is [${password}]`);
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        Username: <input onChange={event => this.saveFormData('username', event)} type="text" name="username" placeholder="plz input user name"/>&nbsp;&nbsp;&nbsp;
+                        Password: <input onChange={event => this.saveFormData('password', event)} type="password" name="password" placeholder="plz input user password"/>&nbsp;&nbsp;&nbsp;
+                        <button> login </button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login/>, document.getElementById('test'));
+    </script>
+</body>
+</html>
