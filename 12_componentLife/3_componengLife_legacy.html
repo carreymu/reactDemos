@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parent component and sub-component</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/16.8.4/react.development.js"></script>
+    <script type="text/javascript" src="../js/16.8.4/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/16.8.4/babel.min.js"></script>
+    <script type="text/babel">
+        class A extends React.Component {
+            state = {carName: 'Das Auto'}
+
+            // Before the component is rendered
+            changeCar = () => {
+                this.setState({carName:'Das Alto'});
+            }
+
+            render() {
+                return (
+                    <div>
+                        <div>I'm component A</div>
+                        <button onClick={this.changeCar}> change car </button> &nbsp;
+                        <B carName={this.state.carName}/>&nbsp;
+                    </div>
+                )
+            }
+        }
+
+        class B extends React.Component {
+            //After the component is updated
+            componentDidUpdate(props) {
+                console.log('B - componentDidUpdate', props);
+            }
+
+            // After the component is updated
+            componentDidMount(props) {
+                console.log('B - componentDidMount', props);
+            }
+
+            componentWillReceiveProps(props) {
+                console.log('B - componentWillReceiveProps', props);
+            }
+
+            shouldComponentUpdate(props) {
+                console.log('B - shouldComponentUpdate', props);
+                return true;
+            }
+
+            render() {
+                console.log('B - render');
+                return (
+                    <div>
+                        I'm component B, my car name is {this.props.carName}
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<A/>, document.getElementById('test'));
+    </script>
+</body>
+</html>

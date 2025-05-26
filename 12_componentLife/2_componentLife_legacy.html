@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component life old version</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/16.8.4/react.development.js"></script>
+    <script type="text/javascript" src="../js/16.8.4/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/16.8.4/babel.min.js"></script>
+    <script type="text/babel">
+        /*
+        Three Stages of the life cycle:
+            1. Initialization, triggered by ReactDOM.render()
+                1.1. constructor()
+                1.2. componentWillMount()
+                1.3. render()
+                1.4. componentDidMount()   --- important, initialize statements
+            2. Update, triggered by this.setState() or parent component render
+                2.1. shouldComponentUpdate()
+                2.2. componentWillUpdate()
+                2.3. render()              --- important
+                2.4. componentDidUpdate()
+            3. Unmount, triggered by ReactDOM.unmountComponentAtNode()
+                3.1. componentWillUnmount() --- important, finally unmount statements
+        */
+        class LifeDemo extends React.Component {
+            constructor(props) {
+                console.log('count - constructor');
+                super(props);
+                this.state = {count: 0}
+            }
+            //state = {count: 0}
+            add = () => {
+                let {count} = this.state;
+                count += 1;
+                this.setState({count});
+            }
+
+            force = () => {
+                this.forceUpdate();
+            }
+            // Before the component is rendered
+            componentWillmount() {
+                console.log('count - componentWillmount');
+            }
+
+            // If missing, the default value is true
+            // The update Operation Setstate is followed by a test to see if it can be updated (true yes, false no-RRB-
+            shouldComponentUpdate() {
+                console.log('count - shouldComponentUpdate');
+                return true;
+            }
+
+            // Before the component is updated
+            componentWillUpdate() {
+                console.log('count - componentWillUpdate');
+            }
+
+            render() {
+                console.log('count - render');
+                const {count} = this.state;
+                return (
+                    <div>
+                        <h2>current sum value: {this.state.count}</h2>
+                        <button onClick={this.add}> add one </button> &nbsp;
+                        <button onClick={()=> ReactDOM.unmountComponentAtNode(document.getElementById('test'))}> kill component</button>&nbsp;
+                        <button onClick={this.force}> force update </button>
+                    </div>
+                )
+            }
+
+            //After the component is updated
+            componentDidUpdate() {
+                console.log('count - componentDidUpdate');
+            }
+
+            // After the component is updated
+            componentDidMount() {
+                console.log('count - componentDidMount');
+            }
+
+            //After the component is unloaded
+            componentWillUnmount() {
+                console.log('count - componentWillUnmount');
+            }
+        }
+        ReactDOM.render(<LifeDemo/>, document.getElementById('test'));
+    </script>
+</body>
+</html>

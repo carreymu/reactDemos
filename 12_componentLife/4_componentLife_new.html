@@ -6,11 +6,11 @@
 </head>
 <body>
     <div id="test"></div>
-    <script type="text/javascript" src="../js/react.development.js"></script>
-    <script type="text/javascript" src="../js/react-dom.development.js"></script>
-    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/18.3.1/react.development.js"></script>
+    <script type="text/javascript" src="../js/18.3.1/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/18.3.1/babel.min.js"></script>
     <script type="text/babel">
-        class LifeDemo extends React.Component {
+        class Count extends React.Component {
             constructor(props) {
                 console.log('count - constructor');
                 super(props);
@@ -26,22 +26,25 @@
             force = () => {
                 this.forceUpdate();
             }
-            // Before the component is rendered
-            componentWillmount() {
-                console.log('count - componentWillmount');
-                
+
+            //If the value of state depends on props at any time, you can use getDerivedStateFromProps.
+            static getDerivedStateFromProps(props, state){
+                console.log('count - getDerivedStateFromProps', props, state);
+                // return props;
+                return null;
+            }
+
+            // obtain snapshot before update component
+            getSnapshotBeforeUpdate(){
+                console.log('count - getSnapshotBeforeUpdate');
+                return 'getSnapshotBeforeUpdate';
             }
 
             // If missing, the default value is true
             // The update Operation Setstate is followed by a test to see if it can be updated (true yes, false no-RRB-
             shouldComponentUpdate() {
                 console.log('count - shouldComponentUpdate');
-                return true;
-            }
-
-            // Before the component is updated
-            componentWillUpdate() {
-                console.log('count - componentWillUpdate');
+                return true; 
             }
 
             render() {
@@ -58,8 +61,8 @@
             }
 
             //After the component is updated
-            componentDidUpdate() {
-                console.log('count - componentDidUpdate');
+            componentDidUpdate(preProps, preState, snapshotValue) {
+                console.log('count - componentDidUpdate, preProps:', preProps, 'preState:',preState, 'snapshotValue:', snapshotValue);
             }
 
             // After the component is updated
@@ -72,7 +75,7 @@
                 console.log('count - componentWillUnmount');
             }
         }
-        ReactDOM.render(<LifeDemo/>, document.getElementById('test'));
+        ReactDOM.render(<Count count="199"/>, document.getElementById('test'));
     </script>
 </body>
 </html>
