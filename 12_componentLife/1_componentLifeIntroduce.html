@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component life introduduce</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class LifeDemo extends React.Component {
+            state = {opacity: 1}
+            kill = () => {
+                //clearInterval(this.timer); // better exec in componentWillUnmount
+                ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+            }
+            componentDidMount() {
+                this.timer = setInterval(()=>{
+                    let {opacity} = this.state;
+                    opacity <= 0 ? opacity = 1 : opacity -= 0.1;
+                    this.setState({opacity}); // this.setState({opacity: opacity});
+                }, 200)
+            }
+            componentWillUnmount() {
+                console.log('will unmount');
+                clearInterval(this.timer);
+            }
+            render() {
+                console.log('render');
+                return (
+                    <div>
+                        <h2 style={{opacity : this.state.opacity}}>change opacity</h2>
+                        <button onClick={this.kill}> Done</button>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<LifeDemo/>, document.getElementById('test'));
+    </script>
+</body>
+</html>

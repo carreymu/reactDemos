@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component life old version</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class LifeDemo extends React.Component {
+            constructor(props) {
+                console.log('count - constructor');
+                super(props);
+                this.state = {count: 0}
+            }
+            //state = {count: 0}
+            add = () => {
+                let {count} = this.state;
+                count += 1;
+                this.setState({count});
+            }
+
+            force = () => {
+                this.forceUpdate();
+            }
+            // Before the component is rendered
+            componentWillmount() {
+                console.log('count - componentWillmount');
+                
+            }
+
+            // If missing, the default value is true
+            // The update Operation Setstate is followed by a test to see if it can be updated (true yes, false no-RRB-
+            shouldComponentUpdate() {
+                console.log('count - shouldComponentUpdate');
+                return true;
+            }
+
+            // Before the component is updated
+            componentWillUpdate() {
+                console.log('count - componentWillUpdate');
+            }
+
+            render() {
+                console.log('count - render');
+                const {count} = this.state;
+                return (
+                    <div>
+                        <h2>current sum value: {this.state.count}</h2>
+                        <button onClick={this.add}> add one </button> &nbsp;
+                        <button onClick={()=> ReactDOM.unmountComponentAtNode(document.getElementById('test'))}> kill component</button>&nbsp;
+                        <button onClick={this.force}> force update </button>
+                    </div>
+                )
+            }
+
+            //After the component is updated
+            componentDidUpdate() {
+                console.log('count - componentDidUpdate');
+            }
+
+            // After the component is updated
+            componentDidMount() {
+                console.log('count - componentDidMount');
+            }
+
+            //After the component is unloaded
+            componentWillUnmount() {
+                console.log('count - componentWillUnmount');
+            }
+        }
+        ReactDOM.render(<LifeDemo/>, document.getElementById('test'));
+    </script>
+</body>
+</html>
