@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>a scenario of getSnapshotBeforeUpdate</title>
+    <style>
+        .list {
+            width: 200px;
+            height: 150px;
+            background-color: gray;
+            overflow: auto;
+        }
+        .news {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/18.3.1/react.development.js"></script>
+    <script type="text/javascript" src="../js/18.3.1/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/18.3.1/babel.min.js"></script>
+    <script type="text/babel">
+        /*
+        Three Stages of the life cycle:
+            1. Initialization, triggered by ReactDOM.render()
+                1.1. constructor()
+                1.2. getDerivedStateFromProps()
+                1.3. render()
+                1.4. componentDidMount()   --- important, initialize statements
+            2. Update, triggered by this.setState() or parent component render
+                2.1. getDerivedStateFromProps()
+                2.2. shouldComponentUpdate()
+                2.2. render()              --- important
+                2.3. getSnapshotBeforeUpdate()
+                2.4. componentDidUpdate()
+            3. Unmount, triggered by ReactDOM.unmountComponentAtNode()
+                3.1. componentWillUnmount() --- important, finally unmount statements
+        */
+        class NewsList extends React.Component {
+            state = {newsArr: []}
+            // After the component is updated
+            componentDidMount() {
+                console.log('count - componentDidMount');
+                setInterval(()=>{
+                    const {newsArr} = this.state;
+                    const news = 'news' + (newsArr.length + 1);
+                    this.setState({newsArr:[news, ...newsArr]});
+                }, 1000);
+            }
+
+            getSnapshotBeforeUpdate() {
+                return this.refs.list.scrollHeight;
+            }
+
+            componentDidUpdate(prevProps, prevState, height) {
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - height;
+            }
+
+            render() {
+                console.log('count - render');
+                const {count} = this.state;
+                return (
+                    <div className="list" ref="list">
+                        {
+                            this.state.newsArr.map((n, index) => {
+                                return <div className="news" key={index}>{n}</div>
+                            })
+                        }
+                        <div className="news">news 6</div>
+                    </div>
+                )
+            }
+            //After the component is unloaded
+            componentWillUnmount() {
+                console.log('count - componentWillUnmount');
+            }
+        }
+        ReactDOM.render(<NewsList/>, document.getElementById('test'));
+    </script>
+</body>
+</html>
