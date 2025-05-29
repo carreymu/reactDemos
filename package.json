@@ -4,5 +4,8 @@
   },
   "dependencies": {
     "react-scripts": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.14"
   }
 }

@@ -8,6 +8,7 @@ function App() {
 
   return (
     <div>
+      <div> 1. Two components in one container</div>
       <Hello/>
       <Welcome/>
       <div className="card">
