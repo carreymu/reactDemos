@@ -5,19 +5,20 @@ import './index.css';
 
 export default class List extends Component {
   static propTypes = {
-    todos: PropTypes.array.isRequired,
-    show: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired,
+    updateTodo: PropTypes.func.isRequired,
     deleteById: PropTypes.func.isRequired,
   }
+
   render() {
-    const { todos } = this.props;
-    console.log(this.props.show)
+    const { items, updateTodo, deleteById } = this.props;
+    // console.log('his.props.show', this.props.show)
     return (
       <div>
         <ul className="todo-main">
           {
-            todos.map((todo) => {
-              return <Item key={todo.id} {...todo} createCheck={this.props.show} deleteById={this.props.deleteById} />
+            items.map(todo => {
+              return <Item key={todo.id} {...todo} updateTodo = {updateTodo} deleteById={deleteById} />
             })
           }
         </ul>
