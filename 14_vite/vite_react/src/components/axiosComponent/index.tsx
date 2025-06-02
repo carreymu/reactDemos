@@ -3,13 +3,13 @@ import { Component } from 'react';
 
 export default class AxiosXHR extends Component {
     getPersonData = () => {
-        axios.get('http://localhost:5000/api1/persons').then(
+        axios.get('https://i0.hdslb.com/bfs/svg-next/BDC/uploader_name_square_line/v1.json').then(
             response => {console.log('success', response.data);},
             error => {console.log('error', error);}
         )
     }
     getCarData = () => {
-        axios.get('http://localhost:5001/api2/cars').then(
+        axios.get('https://i0.hdslb.com/bfs/svg-next/BDC/more_vertical_fill/v1.json').then(
             response => {console.log('success', response.data);},
             error => {console.log('error', error);}
         )
