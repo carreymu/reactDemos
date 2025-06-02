@@ -1,0 +1,9 @@
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    height: 500px;
+    max-height: 500px;
+    width: 900px;
+    overflow: auto;
+    overflow-y: auto;
+  }
