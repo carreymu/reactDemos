@@ -11,16 +11,16 @@ export default class Header extends Component {
 
   handleKeyUp = (event) =>{
     const {keyCode, target} = event;
-    const value = target.value.trim();
+    var todoValue = target.value.trim();
     if(keyCode !== 13) return;
-    if(value === '') {
+    if(todoValue === '') {
       alert('Task name should not be empty.');
       return;
     }
-    console.log(target.value, keyCode);
-    const todoObj = {id: nanoid() , name: target.value, done:false};
+    console.log(todoValue, keyCode);
+    const todoObj = {id: nanoid() , name: todoValue, done:false};
     this.props.addTodo(todoObj);
-    value = '';
+    target.value = '';
   }
 
   render() {

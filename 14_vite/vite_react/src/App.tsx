@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Welcome from './components/welcome';
 import Hello from './components/hello';
+import AxiosXHR from './components/axiosComponent';
 import './App.css';
 import TodoList from './components/todoList/TodoList';
 
@@ -14,12 +15,16 @@ function App() {
         <Hello/>
         <Welcome/>
       </div>
-      <div>
-      <div className='card'> 2. Todo list</div>
+      <div className='card'> 
+        <div>2. Todo list</div>
         <TodoList/>
       </div>
+      <div className='card'>
+        <div>3. Axios demo</div>
+        <AxiosXHR/>
+      </div>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button className='btn btn-danger' onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
